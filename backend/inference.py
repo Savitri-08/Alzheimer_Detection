@@ -1,15 +1,22 @@
+import os
 import torch
 from torchvision import transforms
 from PIL import Image
 from backend.model import AlzheimerCNN
 
-
 device = torch.device("cpu")
 
-# IMPORTANT: match the TRAINED model → 4 classes
-model = AlzheimerCNN(num_classes=4)
-model.load_state_dict(torch.load("alzheimer_model.pth", map_location=device))
+# ---------- LOAD MODEL SAFELY ----------
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(BASE_DIR, "alzheimer_model.pth")
+
+# Initialize model FIRST
+model = AlzheimerCNN(num_classes=4).to(device)
+
+# Now load weights
+model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model.eval()
+# --------------------------------------
 
 transform = transforms.Compose([
     transforms.Grayscale(),
@@ -17,7 +24,7 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-# These names must match your folder names (order from training)
+# These must match your dataset folders
 CLASSES = [
     "Mild_Demented",
     "Moderate_Demented",
@@ -27,7 +34,7 @@ CLASSES = [
 
 def predict_alzheimer(image_path):
     img = Image.open(image_path)
-    img = transform(img).unsqueeze(0)
+    img = transform(img).unsqueeze(0).to(device)
 
     with torch.no_grad():
         output = model(img)
