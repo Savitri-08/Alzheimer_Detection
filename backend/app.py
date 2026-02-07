@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 import shutil, os
-from inference import predict_alzheimer
+from backend.inference import predict_alzheimer
+
 from fastapi.middleware.cors import CORSMiddleware
 
 

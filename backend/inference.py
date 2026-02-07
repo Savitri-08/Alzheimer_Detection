@@ -1,7 +1,8 @@
 import torch
 from torchvision import transforms
 from PIL import Image
-from model import AlzheimerCNN
+from backend.model import AlzheimerCNN
+
 
 device = torch.device("cpu")
 
