@@ -18,7 +18,7 @@ function App() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("https://alzheimer-backend-xyz.onrender.com/predict", {
+      const res = await fetch("https://alzheimer-detection-6.onrender.com/predict", {
 
 
         method: "POST",
