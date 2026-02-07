@@ -18,7 +18,9 @@ function App() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:8000/predict", {
+      const res = await fetch("https://alzheimer-backend-xyz.onrender.com/predict", {
+
+
         method: "POST",
         body: formData,
       });
